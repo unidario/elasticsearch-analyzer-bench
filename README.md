@@ -11,7 +11,7 @@ In this order the analyzer performs operations on the input stream (character fi
 This python script executes search queries to the Elasticsearch search API and collects the time needed to execute this queries.
 Before the execution of each query the cache gets cleared by the script.
 
-### Prerequisites
+## Prerequisites
 
 There are a few things you need, before you can start working. Please make sure you've installed and properly configured the following software:
 
