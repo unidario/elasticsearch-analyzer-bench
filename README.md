@@ -8,7 +8,8 @@ Elastisearch [analyzers](https://www.elastic.co/guide/en/elasticsearch/reference
 An analyzer consist of three blocks: character filters, tokenizers and token filters.
 In this order the analyzer performs operations on the input stream (character filters), then divides the input stream into tokens (tokenizer) and later on it performs some more operations on the tokens (token filters).
 
-This python script executes search queries to the Elasticsearch search API an collects the time needed to execute this queries.
+This python script executes search queries to the Elasticsearch search API and collects the time needed to execute this queries.
+Before the execution of each query the cache gets cleared by the script.
 
 ### Prerequisites
 
@@ -16,8 +17,9 @@ There are a few things you need, before you can start working. Please make sure 
 
 * [Elasticsearch 5.4.3](https://www.elastic.co/downloads/elasticsearch)
 * [Python 3](https://www.python.org/downloads/)
-* [Python Requests Library:](http://docs.python-requests.org/en/master/) `pip3 install requests`
-* [Python Click Library:](http://click.pocoo.org/5/) `pip3 install click`
+* [Python Requests Library](http://docs.python-requests.org/en/master/) for executing curl requests.
+`pip3 install requests`
+* [Python Click Library](http://click.pocoo.org/5/) for the CLI. `pip3 install click`
 
 Not required but helpful:
 * [Elasticdump](https://www.npmjs.com/package/elasticdump) to dump docs easily into a testing Elasticsearch database
