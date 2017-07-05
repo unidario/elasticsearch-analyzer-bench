@@ -1,6 +1,6 @@
 # Elasticsearch Analyzer Test
 
-A time measurement script for elasticsearch analysers written in Python.
+A time measurement script for Elasticsearch analyzers written in Python.
 
 ## Use cases
 
@@ -8,7 +8,7 @@ Elastisearch [analyzers](https://www.elastic.co/guide/en/elasticsearch/reference
 An analyzer consist of three blocks: character filters, tokenizers and token filters.
 In this order the analyzer performs operations on the input stream (character filters), then divides the input stream into tokens (tokenizer) and later on it performs some more operations on the tokens (token filters).
 
-This python script executes search queries to the elasticsearch search API an collects the time needed to execute this queries.
+This python script executes search queries to the Elasticsearch search API an collects the time needed to execute this queries.
 
 ### Prerequisites
 
@@ -20,8 +20,8 @@ There are a few things you need, before you can start working. Please make sure 
 * [Python Click Library:](http://click.pocoo.org/5/) `pip3 install click`
 
 Not required but helpful:
-* [Elasticdump](https://www.npmjs.com/package/elasticdump) to dump docs easily into a testing elasticsearch database
-* [Cerebro](https://github.com/lmenezes/cerebro) to create elasticsearch index templates
+* [Elasticdump](https://www.npmjs.com/package/elasticdump) to dump docs easily into a testing Elasticsearch database
+* [Cerebro](https://github.com/lmenezes/cerebro) to create Elasticsearch index templates
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ cd elasticsearch-analyzer-timing
 Create a txt file with example queries in this directory.
 Each query has to be written in a new line inside the txt file.
 
-Start the script by provinding the path to the queries txt file and at least one index.
+Start the script by providing the path to the queries txt file and at least one index.
 
 ```
 python3 analyzer_test.py $PATH_TO_QUERY_TXT_FILE -i $index -i $index2
@@ -49,12 +49,12 @@ See the [configuration](#Configuration) for all options.
 ## Configuration
 
 | Option          | Description                                                  | Required | Default     |
-|---------------------------------------------------------------------------------------------------------|
+|-----------------|--------------------------------------------------------------|----------|-------------|
 | `--help`        | Show help message and exit                                   |          |             |
-| `-i`, `--index` | One elasticsearch index to test (can be used multiple times) | yes      |             |
+| `-i`, `--index` | One Elasticsearch index to test (can be used multiple times) | yes      |             |
 | `--protocol`    | Hypertext transfer protocol (either `http` or `https`)       | no       | `http`      |
-| `--url`         | The url of elasticsearch                                     | no       | `localhost` |
-| `--port`        | The port number of elasticsearch                             | no       | `9200`      |
+| `--url`         | The url of Elasticsearch                                     | no       | `localhost` |
+| `--port`        | The port number of Elasticsearch                             | no       | `9200`      |
 | `-r`, `--runs`  | The amount of executions per query                           | no       | `1`         |
 
 ## Output
