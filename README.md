@@ -91,6 +91,14 @@ Speed:
 
 ```
 
+## Unittests
+The unittests are located in the file [unit_test.py](unit_test.py).
+
+Run the tests:
+```
+python3 unit_test.py
+```
+
 ## Authors
 
 * **Dario Segger** - *Initial work*
@@ -98,4 +106,4 @@ Speed:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

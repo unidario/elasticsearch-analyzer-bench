@@ -1,0 +1,6 @@
+# Custom ignores
+queries.txt
+response_*.txt
+cache_*.txt
+stats_*.txt
+__pycache__*
