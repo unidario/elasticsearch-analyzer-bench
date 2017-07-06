@@ -8,7 +8,7 @@ Elastisearch [analyzers](https://www.elastic.co/guide/en/elasticsearch/reference
 An analyzer consist of three blocks: character filters, tokenizers and token filters.
 In this order the analyzer performs operations on the input stream (character filters), then divides the input stream into tokens (tokenizer) and later on it performs some more operations on the tokens (token filters).
 
-This python script executes search queries to the Elasticsearch search API and collects the time needed to execute this queries.
+This python script executes search queries to the Elasticsearch search API and collects the time needed to execute these queries.
 Before the execution of each query the cache gets cleared by the script.
 
 ## Prerequisites
@@ -37,8 +37,8 @@ Change the directory to `elasticsearch-analyzer-timing`
 cd elasticsearch-analyzer-timing
 ```
 
-Create a txt file with example queries in this directory.
-Each query has to be written in a new line inside the txt file.
+Create a txt file with example queries in this directory.  
+Each query has to be written on a new line inside the txt file.
 
 Start the script by providing the path to the queries txt file and at least one index.
 
@@ -63,7 +63,7 @@ See the [configuration](#Configuration) for all options.
 
 The script creates the output inside the bash.
 
-The output contains of 4 Elements:
+The output consists of 4 Elements:
 1. Indices which could not be tested because they don't exist in the database (only if necessary).
 2. Output of all analyzers for each index.
 3. Stats for the executed queries per index.
