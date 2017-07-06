@@ -36,7 +36,7 @@ def col_length(headline, content, dict_key=None):
                                 length = len(content[x][key][dict_key])
             elif type(content[key]) == int or type(content[key]) == float:
                 if len(str(content[key])) > length:
-                    length = len(str(content[key])
+                    length = len(str(content[key]))
 
     elif type(content) == int:
         if len(str(content)) > length:
