@@ -37,14 +37,14 @@ class col_length_calculation_test(unittest.TestCase):
         self.assertEqual(analyzer_test.col_length('Test', {'a': 1, 'b': 11, 'c': 2.0, 'f': -12, 'r': 1.1, 0: 231, 5: 222}), 4)
         self.assertEqual(analyzer_test.col_length('Test', {'a': 1.123, 'b': 11, 'c': 2.0, 'f': 153, 'r': 1.1, 0: 231, 5: 222}), 5)
         self.assertEqual(analyzer_test.col_length('Test', {'a': 1, 'b': 11, 'c': 2.0, 'f': 63, 'r': 1.1, 0: 231, 5: 2222}), 4)
-        # length of string compared to length of int/float with treated as strings stored in two nestled dict with specific key
+        # length of string compared to length of int/float with treated as strings stored in two nested dict with specific key
         self.assertEqual(analyzer_test.col_length('Test', {0: {'a': 123, 0: 123.1}, 1: {'a': -1}, 4: {'b': 1234, 'f':1.432523}}, 'a'), 4)
         self.assertEqual(analyzer_test.col_length('Test', {0: {'a': 123, 0: 123.1}, 1: {'a': -1}, 4: {'b': 1234, 1:1.432523}}, 1), 8)
         self.assertEqual(analyzer_test.col_length('Test', {0: {'a': 123, 0: 123.1}, 1: {'a': -1}, 4: {'b': 1234, 'f':1.432523}}, 'b'), 4)
-        # length of string compared to length of string with treated as strings stored in three nestled dict with specific key
-        self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'ab', 'd': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'b'), 4)
-        #self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'ab', 'd': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 0), 5)
-        self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'ab', 'd': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'f'), 4)
+        # length of string compared to length of string with treated as strings stored in three nested dict with specific key
+        self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'b'), 4)
+        self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'd'), 5)
+        self.assertEqual(analyzer_test.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'abcde'}}, 1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'f'), 4)
 
 if __name__ == '__main__':
     unittest.main()
