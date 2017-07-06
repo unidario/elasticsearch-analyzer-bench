@@ -13,6 +13,38 @@ def calculate_mean(lst):
         return s / float(len(lst))
 
 
+# calculate the max needed length for a output col by getting the headline, the content of the rows (different data types) and in ome cases a specific key
+def col_length(headline, content, dict_key=None):
+    length = len(headline)
+    if type(content) == list:
+        for x in content:
+            if type(x) == str:
+                if len(x) > length:
+                    length = len(x)
+
+    elif type(content) == dict:
+        for key in content:
+            if type(content[key]) == dict:
+                if dict_key in content[key]:
+                    if len(str(content[key][dict_key])) > length:
+                        length = len(str(content[key][dict_key]))
+                else:
+                    x = key
+                    for key in content[x]:
+                        if type(content[x][key]) == dict:
+                            if len(content[x][key][dict_key]) > length:
+                                length = len(content[x][key][dict_key])
+            elif type(content[key]) == int or type(content[key]) == float:
+                if len(str(content[key])) > length:
+                    length = len(str(content[key])
+
+    elif type(content) == int:
+        if len(str(content)) > length:
+            length = len(str(content))
+
+    return length
+
+
 def check_if_index_exists(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -98,6 +130,48 @@ def fetch_metrics(url, index, queries):
 
 
 def output(index, time_per_index, successful_per_index, stats_per_index, queries_num, analyzer_per_index, not_existing_indices):
+    # Calculations for the output
+    total = queries_num * number_exec
+    failed = {}
+    suc_rate = {}
+    for ind in index:
+        failed[ind] = total - successful_per_index[ind]
+        if total != 0:
+            suc_rate[ind] = successful_per_index[ind] / total * 100
+        else:
+            suc_rate[ind] = 0
+    timing = {}
+
+    # Naming the headline for each row
+    index_str = 'Index'
+    token_str = 'Tokenizer'
+    token_filter_str = 'Token Filters'
+    char_filter_str = 'Char Filters'
+    query_str = 'Queries'
+    rep_str = 'Repetitions'
+    total_str = 'Total'
+    suc_str = 'Successful'
+    failed_str = 'Failed'
+    suc_rate_str = 'Success rate'
+    docs_str = 'Docs'
+    size_str = 'Size [GB]'
+    avg_speed_str = 'Average speed [ms]'
+
+    # calculating the length for each row
+    index_len = col_length(index_str, index)
+    token_len = col_length(token_str, analyzer_per_index, 'tokenizer')
+    token_filter_len = col_length(token_str, analyzer_per_index, 'token_filter')
+    char_filter_len = col_length(token_str, analyzer_per_index, 'char_filter')
+    query_len = col_length(query_str, queries_num)
+    rep_len = col_length(rep_str, number_exec)
+    total_len = col_length(total_str, total)
+    suc_len = col_length(suc_str, successful_per_index)
+    failed_len = col_length(failed_str, failed)
+    suc_rate_len = col_length(suc_rate_str, suc_rate)
+    docs_len = col_length(docs_str, stats_per_index, 'docs')
+    size_len = col_length(size_str, stats_per_index, 'size')
+    avg_speed_len = col_length(avg_speed_str, time_per_index)
+
     print()
 
     # print indices which does not exist if there are any
@@ -109,24 +183,6 @@ def output(index, time_per_index, successful_per_index, stats_per_index, queries
 
     # print analyzers per index
     print('Analyzers:')
-    index_str = 'Index'
-    index_len = len(index_str)
-    token_str = 'Tokenizer'
-    token_len = len(token_str)
-    token_filter_str = 'Token Filters'
-    token_filter_len = len(token_filter_str)
-    char_filter_str = 'Char Filters'
-    char_filter_len = len(char_filter_str)
-    for ind in index:
-        if len(ind) > index_len:
-            index_len = len(ind)
-        for key in analyzer_per_index[ind]:
-            if len(analyzer_per_index[ind][key]['tokenizer']) > token_len:
-                token_len = len(analyzer_per_index[ind][key]['tokenizer'])
-            if len(analyzer_per_index[ind][key]['token_filter']) > token_filter_len:
-                token_filter_len = len(analyzer_per_index[ind][key]['token_filter'])
-            if len(analyzer_per_index[ind][key]['char_filter']) > char_filter_len:
-                char_filter_len = len(analyzer_per_index[ind][key]['char_filter'])
     print('| {0:^{4}s} | {1:^{5}s} | {2:^{6}s} | {3:^{7}s} |'.format(index_str,
                                                                      token_str,
                                                                      token_filter_str,
@@ -147,46 +203,10 @@ def output(index, time_per_index, successful_per_index, stats_per_index, queries
                                                                              token_len,
                                                                              token_filter_len,
                                                                              char_filter_len))
-
     print()
 
     # calculate & print query stats per index
     print('Query stats:')
-    failed = {}
-    suc_rate = {}
-    query_str = 'Queries'
-    query_len = len(query_str)
-    rep_str = 'Repetitions'
-    rep_len = len(rep_str)
-    total_str = 'Total'
-    total_len = len(total_str)
-    suc_str = 'Successful'
-    suc_len = len(suc_str)
-    failed_str = 'Failed'
-    failed_len = len(failed_str)
-    suc_rate_str = 'Success rate'
-    suc_rate_len = len(suc_rate_str)
-    total = queries_num * number_exec
-    if len(str(number_exec)) > rep_len:
-        rep_len = len(str(number_exec))
-    if len(str(total)) > total_len:
-        total_len = len(str(total))
-    for ind in index:
-        failed[ind] = total - successful_per_index[ind]
-        if total != 0:
-            suc_rate[ind] = successful_per_index[ind] / total * 100
-        else:
-            suc_rate[ind] = 0
-        if len(ind) > index_len:
-            index_len = len(ind)
-        if len(str(total)) > total_len:
-            total_len = len(str(total))
-        if len(str(successful_per_index[ind])) > suc_len:
-            suc_len = len(str(successful_per_index[ind]))
-        if len(str(failed[ind])) > failed_len:
-            failed_len = len(str(failed[ind]))
-        if len(str(suc_rate[ind])) + 2 > suc_rate_len:
-            suc_rate_len = len(str(suc_rate[ind])) + 2
     print(
         '| {0:^{7}s} | {1:^{8}s} | {2:^{9}s} | {3:^{10}s} | {4:^{11}s} | {5:^{12}s} | {6:^{13}s} |'.format(index_str,
                                                                                                            query_str,
@@ -225,18 +245,6 @@ def output(index, time_per_index, successful_per_index, stats_per_index, queries
 
     # print number of docs, size of index and average speed
     print("Speed:")
-    timing = {}
-    docs_str = 'Docs'
-    docs_len = len(docs_str)
-    size_str = 'Size [GB]'
-    size_len = len(size_str)
-    avg_speed_str = 'Average speed [ms]'
-    avg_speed_len = len(avg_speed_str)
-    for ind in index:
-        if len(str(stats_per_index[ind]['docs'])) > docs_len:
-            docs_len = len(str(stats_per_index[ind]['docs']))
-        if len(str(stats_per_index[ind]['size'])) > size_len:
-            size_len = len(str(stats_per_index[ind]['size']))
     print(
         '| {0:^{4}s} | {1:^{5}s} | {2:^{6}s} | {3:^{7}s} |'.format(index_str, docs_str, size_str, avg_speed_str,
                                                                    index_len, docs_len,
