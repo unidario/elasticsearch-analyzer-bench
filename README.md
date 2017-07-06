@@ -98,7 +98,6 @@ Run the tests:
 ```
 python3 unit_test.py
 ```
-The function `calculate_mean` and `col_length` are tested.
 
 ## Authors
 
