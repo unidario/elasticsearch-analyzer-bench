@@ -94,16 +94,22 @@ def fetch_analyzer(url, index):
     return analyzers
 
 
-def fetch_metrics(url, index, queries):
+def fetch_metrics(base_url, index, queries):
+    """
+    :param base_url: Elasticsearch base URL to read metrics from
+    :param index: Elasticsearch index to collect metrics for
+    :param queries: Elasticsearch queries to run
+    :return: Elasticsearch response
+    """
     successful = 0
     stats = {}
     timing = []
     response_file = open("response_" + index + ".txt", "w")
     cache_file = open("cache_" + index + ".txt", "w")
     stats_file = open("stats_" + index + ".txt", "w")
-    url_search = '%s/_search?pretty' % url
-    url_cache = '%s/_cache/clear?pretty' % url
-    url_stat = '%s/_stats' % url
+    url_search = '%s/_search?pretty' % base_url
+    url_cache = '%s/_cache/clear?pretty' % base_url
+    url_stat = '%s/_stats' % base_url
     # collect doc and size of index
     stats_resp = requests.get(url_stat)
     stats_json = stats_resp.json()

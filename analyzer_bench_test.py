@@ -1,5 +1,6 @@
 import unittest
 import analyzer_bench
+import responses
 
 
 class TestAnalyzer(unittest.TestCase):
@@ -52,6 +53,10 @@ class TestAnalyzer(unittest.TestCase):
                                                             1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'd'), 5)
         self.assertEqual(analyzer_bench.col_length('Test', {0: {0: {'a': 'abc', 'b': 'de'}, 1: {'d': 'abcde'}},
                                                             1: {'x': {0: 'abcde', 'f': 'abcd'}}}, 'f'), 4)
+
+
+    def test_fetch_metrics(self):
+        timing, status, stats = analyzer_bench.fetch_metrics("http://localhost:9200/myindex", "myindex", "myquery")
 
 
 if __name__ == '__main__':
