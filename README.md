@@ -29,7 +29,7 @@ Not required but helpful:
 
 ```
 git clone https://github.com/unidario/elasticsearch-analyzer-bench.git
-cd elasticsearch-analyzer-timing
+cd elasticsearch-analyzer-bench
 pip install -r requirements.txt
 ```
 
