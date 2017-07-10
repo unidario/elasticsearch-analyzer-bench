@@ -3,6 +3,7 @@ import click
 
 number_exec = 1
 
+
 def calculate_mean(lst):
     s = 0
     for item in lst:
@@ -71,7 +72,7 @@ def fetch_analyzer(url, index):
             analyzer_item = {'tokenizer': (data[key]['tokenizer']), 'token_filter': '', 'char_filter': ''}
             for x in range(0, len(token_filter)):
                 analyzer_item['token_filter'] += token_filter[x]
-                if x < (len(token_filter)-1):
+                if x < (len(token_filter) - 1):
                     analyzer_item['token_filter'] += ', '
             for x in range(0, len(char_filter)):
                 analyzer_item['char_filter'] += char_filter[x]
@@ -95,7 +96,7 @@ def fetch_metrics(url, index, queries):
     stats_file = open("stats_" + index + ".txt", "w")
     url_search = '%s/_search?pretty' % url
     url_cache = '%s/_cache/clear?pretty' % url
-    url_stat = '%s/_stats' %url
+    url_stat = '%s/_stats' % url
     # collect doc and size of index
     stats_resp = requests.get(url_stat)
     stats_json = stats_resp.json()
@@ -131,7 +132,8 @@ def fetch_metrics(url, index, queries):
     return mean_timing, successful, stats
 
 
-def output(index, time_per_index, successful_per_index, stats_per_index, queries_num, analyzer_per_index, not_existing_indices):
+def output(index, time_per_index, successful_per_index, stats_per_index, queries_num, analyzer_per_index,
+           not_existing_indices):
     # Calculations for the output
     total = queries_num * number_exec
     failed = {}
@@ -279,8 +281,8 @@ def initiation(queries_location, index, protocol, url, port, runs):
         # create urls and check if index exists
         not_existing_indices = []
         for ind in index:
-            if check_if_index_exists('%s://%s:%s/%s' %(protocol, url, str(port), ind)):
-                url_dict[ind] = '%s://%s:%s/%s' %(protocol, url, str(port), ind)
+            if check_if_index_exists('%s://%s:%s/%s' % (protocol, url, str(port), ind)):
+                url_dict[ind] = '%s://%s:%s/%s' % (protocol, url, str(port), ind)
             else:
                 not_existing_indices.append(ind)
         # remove not existing indices from index list
@@ -299,9 +301,11 @@ def initiation(queries_location, index, protocol, url, port, runs):
         stats_per_index = {}
         analyzer_per_index = {}
         for ind in url_dict:
-            timing_per_index[ind], successful_per_index[ind], stats_per_index[ind] = fetch_metrics(url_dict[ind], ind, query_list)
+            timing_per_index[ind], successful_per_index[ind], stats_per_index[ind] = fetch_metrics(url_dict[ind], ind,
+                                                                                                   query_list)
             analyzer_per_index[ind] = fetch_analyzer(url_dict[ind], ind)
-        output(index, timing_per_index, successful_per_index, stats_per_index, len(query_list), analyzer_per_index, not_existing_indices)
+        output(index, timing_per_index, successful_per_index, stats_per_index, len(query_list), analyzer_per_index,
+               not_existing_indices)
 
 
 if __name__ == '__main__':
