@@ -1,4 +1,4 @@
-# Elasticsearch Analyzer Test
+# Elasticsearch Analyzer Bench
 
 A time measurement script for Elasticsearch analyzers written in Python.
 
@@ -27,14 +27,10 @@ Not required but helpful:
 
 ## Getting Started
 
-Clone this repository.
 ```
-git clone https://github.com/unidario/elasticsearch-analyzer-timing.git
-```
-
-Change the directory to `elasticsearch-analyzer-timing`
-```
-cd elasticsearch-analyzer-timing
+git clone https://github.com/unidario/elasticsearch-analyzer-bench.git
+cd elasticsearch-analyzer-bench
+pip install -r requirements.txt
 ```
 
 Create a txt file with example queries in this directory.  
@@ -43,7 +39,7 @@ Each query has to be written on a new line inside the txt file.
 Start the script by providing the path to the queries txt file and at least one index.
 
 ```
-python3 analyzer_test.py $PATH_TO_QUERY_TXT_FILE -i $index -i $index2
+python3 analyzer_bench.py $PATH_TO_QUERY_TXT_FILE -i $index -i $index2
 ```
 
 See the [configuration](#Configuration) for all options.
