@@ -17,7 +17,7 @@ def calculate_mean(lst):
 def col_length(headline, content, dict_key=None):
     """
     calculate the max needed length for a output col by getting the headline, the content of the rows
-    (different data types) and in ome cases a specific key
+    (different data types) and in some cases a specific key
     :param headline: Column headline
     :param content: A list of column contents
     :param dict_key: Extract only a part of the columns
